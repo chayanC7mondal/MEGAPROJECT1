@@ -129,7 +129,7 @@ const loginUser = asyncHandler(async (req, res) => {
   );
 
   //cookie
-  
+
   const options = {
     httpOnly: true,
     secure: true,
@@ -138,13 +138,40 @@ const loginUser = asyncHandler(async (req, res) => {
     .status(200)
     .cookie("accessToken", accessToken, options)
     .cookie("refreshToken", refreshToken, options)
-    .json ApiResponse(200,
-      {
-        user: loggedInUser, accessToken, refreshToken
-
-      },
-      "User Logged In Successfully"
-    )
+    .json(
+      new ApiResponse(
+        200,
+        {
+          user: loggedInUser,
+          accessToken,
+          refreshToken,
+        },
+        "User Logged In Successfully"
+      )
+    );
 });
 
-export { registerUser, loginUser };
+const logoutUser = asyncHandler(async (req, res) => {
+  //clear cookies
+  User.findByIdAndUpdate(req.user._id, {
+    $set: {
+      refreshToken: undefined,
+    },
+  }
+{
+  new: true
+}
+);
+const options = {
+  httpOnly: true,
+  secure: true,
+};
+return res
+.status(200)
+.clearCookie("accessToken", options)
+.clearCookie("refreshToken", options)
+.json(new ApiResponse(200, {}, "User Logged Out Successfully"))
+
+});
+
+export { registerUser, loginUser, logoutUser };
