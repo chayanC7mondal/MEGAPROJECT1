@@ -11,3 +11,6 @@ algorithm of user controller :
 //remove password and refresh token feild from response
 //check for user creation
 //return response
+
+netstat -ano | findstr :8000
+taskkill /PID 33192 /F
