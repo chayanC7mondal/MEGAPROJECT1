@@ -29,7 +29,7 @@ const userSchema = new Schema(
       type: String, //cloudinary
       required: true,
     },
-    coverimage: {
+    coverImage: {
       type: String,
     },
     watchHistory: [{ type: mongoose.Types.ObjectId, ref: "Video" }],
