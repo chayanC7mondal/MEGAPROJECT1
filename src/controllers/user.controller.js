@@ -277,6 +277,31 @@ const updateAccountDetails = asyncHandler(async (req, res) => {
     .json(new ApiResponse(200, user, "User Details Updated Successfully"));
 });
 
+const updateUserAvatar = asyncHandler(async (req, res) => {
+  //req => data
+  //upload avatar to cloudinary
+  //update user avatar
+  //send response
+  const avatarLocalPath = req.files?.avatar[0]?.path;
+  if (!avatarLocalPath) {
+    throw new ApiError(400, "Avatar is required");
+  }
+  const avatar = await uploadOnCloudinary(avatarLocalPath);
+  if (!avatar.url) {
+    throw new ApiError(400, "Error wWhile Uploading Avatar");
+  }
+
+  const user = await User.findByIdAndUpdate(
+    req.user._id,
+    {
+      $set: {
+        avatar: avatar.url,
+      },
+    },
+    { new: true }
+  ).select("-password");
+});
+
 export {
   registerUser,
   loginUser,
@@ -284,4 +309,5 @@ export {
   refreshAccessToken,
   changeCurrentPassword,
   getCurrentUser,
+  updateAccountDetails,
 };
