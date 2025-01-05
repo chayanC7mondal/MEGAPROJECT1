@@ -1,5 +1,5 @@
 # MEGAPROJECT1
-
+//frontend needs to be done
 algorithm of user controller :
 
 //get user details from frontend
