@@ -1,5 +1,10 @@
 # MEGAPROJECT1
 //frontend needs to be done
+
+
+#Backend Project for a social media platform
+
+
 algorithm of user controller :
 
 //get user details from frontend
